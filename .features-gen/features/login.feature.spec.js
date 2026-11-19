@@ -1,14 +1,14 @@
 // Generated from: features\login.feature
-import { test } from "playwright-bdd";
+import { test } from "../../fixtures/login.fixture.ts";
 
 test.describe('SauceDemo Login', () => {
 
-  test('Successful login with valid credentials', async ({ Given, When, Then, And, page }) => { 
-    await Given('user is on the SauceDemo login page', null, { page }); 
-    await When('user enters valid credentials', null, { page }); 
-    await And('user clicks on the login button', null, { page }); 
-    await Then('user should be redirected to the products page', null, { page }); 
-    await And('user should see the products heading', null, { page }); 
+  test('Successful login with valid credentials', async ({ Given, When, Then, And, loginPage }) => { 
+    await Given('user is on the SauceDemo login page', null, { loginPage }); 
+    await When('user enters valid credentials', null, { loginPage }); 
+    await And('user clicks on the login button', null, { loginPage }); 
+    await Then('user should be redirected to the products page', null, { loginPage }); 
+    await And('user should see the products heading', null, { loginPage }); 
   });
 
 });

@@ -1,48 +1,43 @@
 
 import { createBdd } from 'playwright-bdd';
-import { test } from 'playwright-bdd';
-import { expect } from '@playwright/test';
+import { test } from '../fixtures/login.fixture';
 
 const { Given, When, Then } = createBdd(test);
 
 Given(
   'user is on the SauceDemo login page',
-  async ({ page }) => {
-    await page.goto('/');
+  async ({ loginPage }) => {
+    await loginPage.open();
   }
 );
 
 When(
   'user enters valid credentials',
-  async ({ page }) => {
-    await page.locator('#user-name')
-      .fill('standard_user');
-
-    await page.locator('#password')
-      .fill('secret_sauce');
+  async ({ loginPage }) => {
+    await loginPage.enterCredentials(
+      'standard_user',
+      'secret_sauce'
+    );
   }
 );
 
 When(
   'user clicks on the login button',
-  async ({ page }) => {
-    await page.locator('#login-button').click();
+  async ({ loginPage }) => {
+    await loginPage.clickLogin();
   }
 );
 
 Then(
   'user should be redirected to the products page',
-  async ({ page }) => {
-    await expect(page)
-      .toHaveURL(/inventory.html/);
+  async ({ loginPage }) => {
+    await loginPage.expectProductsPage();
   }
 );
 
 Then(
   'user should see the products heading',
-  async ({ page }) => {
-    await expect(
-      page.getByText('Products', { exact: true })
-    ).toBeVisible();
+  async ({ loginPage }) => {
+    await loginPage.expectProductsHeading();
   }
 );
